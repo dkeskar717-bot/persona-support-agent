@@ -22,6 +22,20 @@ if st.button("Submit"):
     # RAG Retrieval
     context = retrieve_context(user_input)
 
+    # Escalation Logic
+    escalation_words = [
+        "refund",
+        "billing",
+        "duplicate charge",
+        "legal",
+        "lawsuit"
+    ]
+
+    escalate = any(
+        word in user_input.lower()
+        for word in escalation_words
+    )
+
     # Gemini Response
     response = client.models.generate_content(
         model="gemini-2.5-flash",
@@ -43,6 +57,17 @@ if st.button("Submit"):
 
     st.write("### Retrieved Context")
     st.write(context)
+
+    if escalate:
+        st.error("Escalation Required")
+
+        st.write("### Escalation Report")
+
+        st.json({
+            "escalate": True,
+            "reason": "Billing/Legal Issue",
+            "summary": user_input
+        })
 
     st.write("### Response")
     st.write(response.text)
