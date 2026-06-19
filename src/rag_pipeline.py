@@ -1,15 +1,17 @@
-import os
+import chromadb
+
+client = chromadb.PersistentClient(path="./chroma_db")
+
+collection = client.get_collection("knowledge_base")
 
 def retrieve_context(query):
-    data_folder = "data"
 
-    for file in os.listdir(data_folder):
-        path = os.path.join(data_folder, file)
+    results = collection.query(
+        query_texts=[query],
+        n_results=1
+    )
 
-        with open(path, "r") as f:
-            content = f.read()
-
-            if any(word.lower() in content.lower() for word in query.split()):
-                return content
+    if results["documents"] and len(results["documents"][0]) > 0:
+        return results["documents"][0][0]
 
     return "No relevant information found."

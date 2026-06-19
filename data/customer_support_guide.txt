@@ -1,0 +1,31 @@
+Customer Support Guide
+
+1. Password Reset
+Users can reset their password using the "Forgot Password" option.
+
+2. Account Lock
+Accounts are locked after 5 failed login attempts.
+
+3. API Authentication
+A 401 Unauthorized error usually indicates an invalid API key.
+
+4. Billing Issues
+Billing disputes are reviewed within 5 business days.
+
+5. Refund Policy
+Refund requests are processed within 7 business days.
+
+6. Email Verification
+Users must verify their email before accessing premium services.
+
+7. Subscription Management
+Subscriptions can be upgraded, downgraded, or canceled from account settings.
+
+8. Payment Failure
+Payment failures may occur due to insufficient balance or expired cards.
+
+9. Login Problems
+Users should check credentials and clear browser cache.
+
+10. Technical Support
+For unresolved issues, contact technical support.
