@@ -1,17 +1,36 @@
-import chromadb
-
-client = chromadb.PersistentClient(path="./chroma_db")
-
-collection = client.get_collection("knowledge_base")
+import os
 
 def retrieve_context(query):
+    data_folder = "data"
 
-    results = collection.query(
-        query_texts=[query],
-        n_results=1
-    )
+    if not os.path.exists(data_folder):
+        return "Knowledge base folder not found."
 
-    if results["documents"] and len(results["documents"][0]) > 0:
-        return results["documents"][0][0]
+    query_words = query.lower().split()
+
+    for file in os.listdir(data_folder):
+
+        path = os.path.join(data_folder, file)
+
+        if not os.path.isfile(path):
+            continue
+
+        # PDF files skip
+        if file.endswith(".pdf"):
+            continue
+
+        try:
+            with open(path, "r", encoding="utf-8", errors="ignore") as f:
+
+                content = f.read()
+
+                if any(
+                    word in content.lower()
+                    for word in query_words
+                ):
+                    return content
+
+        except Exception:
+            continue
 
     return "No relevant information found."
